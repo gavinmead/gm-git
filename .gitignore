@@ -1,3 +1,9 @@
+#Bazel Things
+bazel-bin
+bazel-out
+bazel-gm-git
+bazel-testlogs
+
 # Prerequisites
 *.d
 
@@ -30,3 +36,7 @@
 *.exe
 *.out
 *.app
+
+.clwb/.blaze
+.clwb/.idea
+
