@@ -1,0 +1,13 @@
+directories:
+  ./
+  cpp/cmd
+  cpp/lib
+  tests/unit
+# test/integration
+test_sources:
+  tests/unit
+  # test/integration
+
+# Automatically includes all relevant targets under the 'directories' above
+derive_targets_from_directories: true
+
