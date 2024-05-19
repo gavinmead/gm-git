@@ -40,3 +40,4 @@ bazel-testlogs
 .clwb/.blaze
 .clwb/.idea
 
+/.idea
