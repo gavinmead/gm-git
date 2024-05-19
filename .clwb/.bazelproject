@@ -2,10 +2,8 @@ directories:
   ./
   cpp/cmd
   cpp/lib
-  tests/unit
+  #tests/unit
 # test/integration
-test_sources:
-  tests/unit
   # test/integration
 
 # Automatically includes all relevant targets under the 'directories' above
