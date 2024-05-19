@@ -23,5 +23,5 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
       - uses: bazelbuild/setup-bazelisk@v2
-      - run: bazel test --test_output=all tests/unit:all
+      - run:  bazel test --test_output=all //cpp/lib/...:all
 
