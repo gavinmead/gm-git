@@ -12,6 +12,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  USE_BAZEL_VERSION: 7.1.2
+
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
@@ -23,6 +26,14 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      - uses: bazelbuild/setup-bazelisk@v2
-      - run:  bazel test --test_output=all //cpp/lib/...:all
+      - uses: bazel-contrib/setup-bazel@0.8.2
+        with:
+          # Avoid downloading Bazel every time.
+          bazelisk-cache: true
+          # Store build cache per workflow.
+          disk-cache: ${{ github.workflow }}
+          # Share repository cache between workflows.
+          repository-cache: true
+          bazelisk-version: 1.19.0
+      - run:  bazel test --host_cxxopt="-std=c++17" --test_output=all //cpp/lib/...:all
 
