@@ -2,14 +2,16 @@ load("@rules_cc//cc:defs.bzl", "cc_library")
 
 cc_library(
     name = "cli_lib",
-    srcs = ["add.cc"],
+    srcs = [
+        "command.cc",
+    ],
     hdrs = ["command.h"],
     visibility = ["//visibility:public"],
 )
 
 cc_test(
-    name = "cli_test",
-    srcs = ["cli_test.cc"],
+    name = "command_test",
+    srcs = ["command_test.cc"],
     visibility = ["//visibility:private"],
     deps = [
         ":cli_lib",
