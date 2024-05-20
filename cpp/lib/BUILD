@@ -1,8 +1,3 @@
-load("@rules_cc//cc:defs.bzl", "cc_library")
+load("@bazel_skylib//lib:selects.bzl", "selects")
 
-cc_library(
-    name = "MyMathLib",
-    srcs = glob(["*.cc"]),
-    hdrs = ["my_math.h"],
-    visibility = ["//visibility:public"],
-)
+package(default_visibility = ["//visibility:public"])
