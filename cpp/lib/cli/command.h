@@ -12,18 +12,33 @@
 namespace cli {
 
     class Command {
+        using Run = int (*)(Command *cmd, char *argv[]);
     public:
-        explicit Command(std::string use, std::string shortDescription="", std::string longDescription="") :
-            use(std::move(use)),
-            shortDescription(std::move(shortDescription)),
-            longDescription(std::move(longDescription)) {
-            subCommands = std::vector<std::unique_ptr<Command>>();
+
+        explicit Command(std::string name,
+                         std::string use = "",
+                         std::string shortDescription = "",
+                         std::string longDescription = "",
+                         Run onRun = nullptr) :
+                name(std::move(name)),
+                use(std::move(use)),
+                shortDescription(std::move(shortDescription)),
+                longDescription(std::move(longDescription)) {
+
+            subCommands = std::vector<std::unique_ptr<Command>>(),
+            r = onRun;
+
         }
+
         ~Command() = default;
 
+        std::string Name() const { return name; }
         std::string Use() const { return use; }
-        std::string ShortDescription() const {return shortDescription; }
-        std::string LongDescription() const {return longDescription; }
+
+        std::string ShortDescription() const { return shortDescription; }
+
+        std::string LongDescription() const { return longDescription; }
+
         unsigned long CommandCount() const { return subCommands.size(); }
 
         /**
@@ -32,16 +47,17 @@ namespace cli {
          */
         void AddCommand(std::unique_ptr<Command> command);
 
+        int Execute(int argc, char *argv[]);
+
     private:
+        std::string name;
         std::string use;
         std::string shortDescription;
         std::string longDescription;
+        Run r;
         std::vector<std::unique_ptr<Command>> subCommands;
     };
 
-    int Execute(int argc, char* argv[], Command* rootCmd);
-
-    int add(int x, int y);
 
 }
 

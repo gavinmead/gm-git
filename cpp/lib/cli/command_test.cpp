@@ -12,25 +12,26 @@ TEST(CommandTest, TestDefaultConstructor) {
     auto cmd = std::make_unique<Command> ( "test" );
     ASSERT_NE(cmd, nullptr);
 
-    EXPECT_EQ(cmd->Use(), "test");
+    EXPECT_EQ(cmd->Name(), "test");
+    EXPECT_EQ(cmd->Use(), "");
     EXPECT_EQ(cmd->ShortDescription(), "");
     EXPECT_EQ(cmd->LongDescription(), "");
     EXPECT_EQ(cmd->CommandCount(), 0);
 }
 
 TEST(CommandTest, TestCustomConstructorArgs) {
-    auto cmd = std::make_unique<Command> ( "test", "short", "long");
+    auto cmd = std::make_unique<Command> ( "test", "use", "short", "long");
 
     ASSERT_NE(cmd, nullptr);
-
-    EXPECT_EQ(cmd->Use(), "test");
+    EXPECT_EQ(cmd->Name(), "test");
+    EXPECT_EQ(cmd->Use(), "use");
     EXPECT_EQ(cmd->ShortDescription(), "short");
     EXPECT_EQ(cmd->LongDescription(), "long");
     EXPECT_EQ(cmd->CommandCount(), 0);
 }
 
 TEST(CommandTest, TestAddCommand) {
-    auto root = std::make_unique<Command> ( "testRoot", "short", "long");
+    auto root = std::make_unique<Command> ( "testRoot");
     auto sub = std::make_unique<Command> ( "sub");
     ASSERT_NE(root, nullptr);
     ASSERT_NE(sub, nullptr);
@@ -40,7 +41,7 @@ TEST(CommandTest, TestAddCommand) {
 }
 
 TEST(CommandTest, TestAddNullCommand) {
-    auto cmd = std::make_unique<Command> ( "test", "short", "long");
+    auto cmd = std::make_unique<Command> ( "test");
 
     ASSERT_NE(cmd, nullptr);
     cmd->AddCommand(nullptr);
