@@ -8,7 +8,13 @@
 
 #include "absl/strings/str_join.h"
 
-int main() {
+int main(int argc, const char* argv[]) {
+
+    for (int i = 0; i < argc; i++) {
+        const char* v = argv[i];
+        std::cout << "arg: " << v<< std::endl;
+    }
+
     std::vector<std::string> v = {"foo", "bar", "baz"};
     std::string s = absl::StrJoin(v, "-");
 

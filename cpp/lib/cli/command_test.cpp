@@ -47,3 +47,31 @@ TEST(CommandTest, TestAddNullCommand) {
     cmd->AddCommand(nullptr);
     EXPECT_EQ(cmd->CommandCount(), 0);
 }
+
+TEST(CommandTest, ExecuteSimpleCommand) {
+    auto cmd = std::make_unique<Command> ( "test");
+    ASSERT_NE(cmd, nullptr);
+
+    std::string cmdName("test");
+    std::string cmdFlag("-h");
+
+    const char* args[]={
+            "test","-h",
+    };
+    int argc = sizeof(args)/sizeof(char*);
+
+    auto result = cmd->Execute(argc, args);
+    ASSERT_EQ(result, CommandResult::ok);
+
+}
+
+TEST(CommandTest, GetSubCommandNamesTest) {
+    auto rootCmd = std::make_unique<Command>("rootCmd");
+    auto subCmd = std::make_unique<Command>("subCmd");
+
+    rootCmd->AddCommand(std::move(subCmd));
+
+    auto results = rootCmd->GetSubCommandNames();
+    ASSERT_EQ(results.size(), 1);
+    ASSERT_EQ(results.front(), "subCmd");
+}

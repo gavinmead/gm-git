@@ -8,8 +8,14 @@
 #include <memory>
 #include <utility>
 #include <vector>
+#include <list>
 
 namespace cli {
+
+    enum class CommandResult {
+        ok,
+        parse_error
+    };
 
     class Command {
         using Run = int (*)(Command *cmd, char *argv[]);
@@ -42,12 +48,26 @@ namespace cli {
         unsigned long CommandCount() const { return subCommands.size(); }
 
         /**
+         *
+         * @return an unordered list of each subcommand registered to this command
+         */
+        std::list<std::string> GetSubCommandNames();
+
+        /**
          * Adds a command as a sub command
          * @param command
          */
         void AddCommand(std::unique_ptr<Command> command);
 
-        int Execute(int argc, char *argv[]);
+
+
+        /**
+         *
+         * @param argc
+         * @param argv
+         * @return a command result determine success of failure
+         */
+        CommandResult Execute(int argc, const char* argv[]);
 
     private:
         std::string name;
