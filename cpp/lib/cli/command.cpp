@@ -2,6 +2,7 @@
 // Created by Gavin Mead on 5/19/24.
 //
 
+#include "arg_type.h"
 #include "command.h"
 #include <vector>
 #include <memory>
@@ -27,6 +28,9 @@ CommandResult Command::Execute(int argc, const char* argv[]) {
         }
 
         const char* current_arg = argv[idx];
+
+        auto subCmdNames = GetSubCommandNames();
+        auto argType = resolveArgType(current_arg, subCmdNames);
 
         //Determine what the arg is (a flag, an arg or subcommand)
 

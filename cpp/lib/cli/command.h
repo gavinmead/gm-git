@@ -49,9 +49,11 @@ namespace cli {
 
         /**
          *
-         * @return an unordered list of each subcommand registered to this command
+         * @param argc
+         * @param argv
+         * @return a command result determine success of failure
          */
-        std::list<std::string> GetSubCommandNames();
+        CommandResult Execute(int argc, const char* argv[]);
 
         /**
          * Adds a command as a sub command
@@ -59,17 +61,14 @@ namespace cli {
          */
         void AddCommand(std::unique_ptr<Command> command);
 
-
-
         /**
          *
-         * @param argc
-         * @param argv
-         * @return a command result determine success of failure
+         * @return an unordered list of each subcommand registered to this command
          */
-        CommandResult Execute(int argc, const char* argv[]);
+        std::list<std::string> GetSubCommandNames();
 
     private:
+
         std::string name;
         std::string use;
         std::string shortDescription;

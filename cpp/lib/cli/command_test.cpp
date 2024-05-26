@@ -52,9 +52,6 @@ TEST(CommandTest, ExecuteSimpleCommand) {
     auto cmd = std::make_unique<Command> ( "test");
     ASSERT_NE(cmd, nullptr);
 
-    std::string cmdName("test");
-    std::string cmdFlag("-h");
-
     const char* args[]={
             "test","-h",
     };
