@@ -15,6 +15,7 @@ namespace cli {
     };
 
     ArgType resolveArgType(const char* arg, std::list<std::string> commandList);
+
 }
 
 #endif //CLWB_ARG_TYPE_H

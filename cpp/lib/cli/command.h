@@ -14,7 +14,8 @@ namespace cli {
 
     enum class CommandResult {
         ok,
-        parse_error
+        parse_error,
+        invalid_flag,
     };
 
     class Command {

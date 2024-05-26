@@ -62,6 +62,24 @@ TEST(CommandTest, ExecuteSimpleCommand) {
 
 }
 
+TEST(CommandTest, ExecuteWithSubCommand) {
+    auto rootCmd = std::make_unique<Command> ( "test");
+    auto subCmd = std::make_unique<Command>("sub");
+
+    ASSERT_NE(rootCmd, nullptr);
+    ASSERT_NE(subCmd, nullptr);
+
+    rootCmd->AddCommand(std::move(subCmd));
+
+    const char* args[]={
+            "test","sub",
+    };
+    int argc = sizeof(args)/sizeof(char*);
+
+    auto result = rootCmd->Execute(argc, args);
+    ASSERT_EQ(result, CommandResult::ok);
+}
+
 TEST(CommandTest, GetSubCommandNamesTest) {
     auto rootCmd = std::make_unique<Command>("rootCmd");
     auto subCmd = std::make_unique<Command>("subCmd");
