@@ -59,3 +59,11 @@ TEST(ArgTypeTest, TestIsFlagWithSameSubCommand) {
     auto result = resolveArgType(arg, l);
     ASSERT_EQ(result, ArgType::Flag);
 }
+
+TEST(ArgTypeTest, TestArgTypeResolver) {
+    const char* arg = "--test";
+    auto l = std::list<std::string>{"test"};
+    auto resolver = ArgTypeResolver();
+    auto result = resolver.resolveArgType(arg, l);
+    ASSERT_EQ(result, ArgType::Flag);
+}

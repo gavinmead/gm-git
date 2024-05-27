@@ -31,7 +31,7 @@ CommandResult Command::Execute(int argc, const char* argv[]) {
         const char* current_arg = argv[idx];
 
         auto subCmdNames = GetSubCommandNames();
-        auto argType = resolveArgType(current_arg, subCmdNames);
+        auto argType = argTypeResolver->resolveArgType(current_arg, subCmdNames);
 
         switch (argType) {
 

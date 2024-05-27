@@ -4,6 +4,8 @@
 
 #include "command.h"
 #include "gtest/gtest.h"
+#include "gmock/gmock.h"
+#include "arg_type_mock.h"
 #include <memory>
 
 using namespace cli;
@@ -49,7 +51,12 @@ TEST(CommandTest, TestAddNullCommand) {
 }
 
 TEST(CommandTest, ExecuteSimpleCommand) {
-    auto cmd = std::make_unique<Command> ( "test");
+    std::shared_ptr<MockArgTypeResolver> mockResolver = std::make_shared<MockArgTypeResolver>();
+    EXPECT_CALL(*mockResolver, resolveArgType)
+        .Times(1)
+        .WillOnce(::testing::Return(ArgType::Flag));
+
+    auto cmd = std::make_unique<Command>("test", "", "", "", mockResolver);
     ASSERT_NE(cmd, nullptr);
 
     const char* args[]={

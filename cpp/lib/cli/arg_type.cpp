@@ -24,5 +24,9 @@ namespace cli {
         }
 
     }
+
+    ArgType ArgTypeResolver::resolveArgType(const char *arg, std::list<std::string> commandList) {
+        return cli::resolveArgType(arg, commandList);
+    }
 }
 

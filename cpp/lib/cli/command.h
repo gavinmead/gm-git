@@ -9,6 +9,7 @@
 #include <utility>
 #include <vector>
 #include <list>
+#include "arg_type.h"
 
 namespace cli {
 
@@ -26,6 +27,7 @@ namespace cli {
                          std::string use = "",
                          std::string shortDescription = "",
                          std::string longDescription = "",
+                         std::shared_ptr<ArgTypeResolver> resolver = nullptr,
                          Run onRun = nullptr) :
                 name(std::move(name)),
                 use(std::move(use)),
@@ -34,6 +36,12 @@ namespace cli {
 
             subCommands = std::vector<std::unique_ptr<Command>>(),
             r = onRun;
+
+            if (resolver == nullptr) {
+                argTypeResolver = std::make_shared<ArgTypeResolver>();
+            } else {
+                argTypeResolver = resolver;
+            }
 
         }
 
@@ -69,12 +77,12 @@ namespace cli {
         std::list<std::string> GetSubCommandNames();
 
     private:
-
         std::string name;
         std::string use;
         std::string shortDescription;
         std::string longDescription;
         Run r;
+        std::shared_ptr<ArgTypeResolver> argTypeResolver;
         std::vector<std::unique_ptr<Command>> subCommands;
     };
 
