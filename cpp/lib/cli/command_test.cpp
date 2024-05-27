@@ -70,7 +70,12 @@ TEST(CommandTest, ExecuteSimpleCommand) {
 }
 
 TEST(CommandTest, ExecuteWithSubCommand) {
-    auto rootCmd = std::make_unique<Command> ( "test");
+    std::shared_ptr<MockArgTypeResolver> mockResolver = std::make_shared<MockArgTypeResolver>();
+    EXPECT_CALL(*mockResolver, resolveArgType)
+            .Times(1)
+            .WillOnce(::testing::Return(ArgType::Command));
+
+    auto rootCmd = std::make_unique<Command> ( "test", "", "", "", mockResolver);
     auto subCmd = std::make_unique<Command>("sub");
 
     ASSERT_NE(rootCmd, nullptr);
@@ -80,6 +85,30 @@ TEST(CommandTest, ExecuteWithSubCommand) {
 
     const char* args[]={
             "test","sub",
+    };
+    int argc = sizeof(args)/sizeof(char*);
+
+    auto result = rootCmd->Execute(argc, args);
+    ASSERT_EQ(result, CommandResult::ok);
+}
+
+TEST(CommandTest, ExecuteSimpleMix) {
+    std::shared_ptr<MockArgTypeResolver> mockResolver = std::make_shared<MockArgTypeResolver>();
+    EXPECT_CALL(*mockResolver, resolveArgType)
+            .Times(2)
+            .WillOnce(::testing::Return(ArgType::Flag))
+            .WillOnce(::testing::Return(ArgType::Command));
+
+    auto rootCmd = std::make_unique<Command> ( "test", "", "", "", mockResolver);
+    auto subCmd = std::make_unique<Command>("sub");
+
+    ASSERT_NE(rootCmd, nullptr);
+    ASSERT_NE(subCmd, nullptr);
+
+    rootCmd->AddCommand(std::move(subCmd));
+
+    const char* args[]={
+            "test", "-d", "sub",
     };
     int argc = sizeof(args)/sizeof(char*);
 
