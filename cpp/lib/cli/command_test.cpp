@@ -116,6 +116,39 @@ TEST(CommandTest, ExecuteSimpleMix) {
     ASSERT_EQ(result, CommandResult::ok);
 }
 
+TEST(CommandTest, MultiFlagAndSubCommands) {
+    std::shared_ptr<MockArgTypeResolver> mockResolver = std::make_shared<MockArgTypeResolver>();
+    EXPECT_CALL(*mockResolver, resolveArgType)
+            .Times(5)
+            .WillOnce(::testing::Return(ArgType::Flag))
+            .WillOnce(::testing::Return(ArgType::Command))
+            .WillOnce(::testing::Return(ArgType::Command))
+            .WillOnce(::testing::Return(ArgType::Flag))
+            .WillOnce(::testing::Return(ArgType::Argument));
+
+    auto rootCmd = std::make_unique<Command> ( "test", "", "", "", mockResolver);
+    auto subCmd = std::make_unique<Command>("sub", "", "", "", mockResolver);
+    auto thirdCmd = std::make_unique<Command>("third", "", "", "", mockResolver);
+
+    ASSERT_NE(rootCmd, nullptr);
+    ASSERT_NE(subCmd, nullptr);
+    ASSERT_NE(thirdCmd, nullptr);
+
+    //The order command adds must be bottom up because of the move.
+    subCmd->AddCommand(std::move(thirdCmd));
+    rootCmd->AddCommand(std::move(subCmd));
+
+
+    const char* args[]={
+            "test", "-d", "sub", "third", "--foo", "argument"
+    };
+    int argc = sizeof(args)/sizeof(char*);
+
+    auto result = rootCmd->Execute(argc, args);
+    ASSERT_EQ(result, CommandResult::ok);
+
+}
+
 TEST(CommandTest, GetSubCommandNamesTest) {
     auto rootCmd = std::make_unique<Command>("rootCmd");
     auto subCmd = std::make_unique<Command>("subCmd");
