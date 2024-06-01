@@ -34,7 +34,5 @@ int main(int argc, const char* argv[]) {
         std::cout << "Division by zero" << std::endl;
     }
 
-
-
     return 0;
 }
