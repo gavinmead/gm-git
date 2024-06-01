@@ -25,6 +25,11 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Update gcc
+        run: |
+          sudo apt-get update
+          sudo apt-get install gcc
+          gcc --version
       - uses: actions/checkout@v3
       - uses: bazel-contrib/setup-bazel@0.8.2
         with:
@@ -35,5 +40,10 @@ jobs:
           # Share repository cache between workflows.
           repository-cache: true
           bazelisk-version: 1.19.0
-      - run:  bazel test --host_cxxopt="-std=c++17" --test_output=all //cpp/lib/...:all
-
+          bazelrc: |
+            common --enable_bzlmod
+            build --cxxopt='-std=c++17'
+            test --cxxopt='-std=c++17'
+      #- run:  bazel test --test_output=all //cpp/lib/...:all --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type'
+      - run:  bazel build //cpp/cmd:gm-git --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type'
+      - run:  bazel test --test_output=all //cpp/lib/...:all --toolchain_resolution_debug='@bazel_tools//tools/cpp:toolchain_type'

@@ -4,7 +4,7 @@
 
 #include "arg_type.h"
 #include <string>
-#include <iostream>
+#include <algorithm>
 
 namespace cli {
     ArgType resolveArgType(const char* arg, std::list<std::string> commandList) {
