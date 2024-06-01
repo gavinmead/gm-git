@@ -11,12 +11,12 @@ cc_library(
         "command.h",
         "flag.h",
     ],
-#    copts = [
-#        "-std=c++17",
-#    ],
-#    linkopts = [
-#        "-std=c++17",
-#    ],
+    #    copts = [
+    #        "-std=c++17",
+    #    ],
+    #    linkopts = [
+    #        "-std=c++17",
+    #    ],
     visibility = ["//visibility:public"],
 )
 
@@ -74,12 +74,12 @@ cc_test(
 cc_test(
     name = "flag_test",
     srcs = ["flag_test.cpp"],
-    copts = [
-        "-std=c++17",
-    ],
-    linkopts = [
-        "-std=c++17",
-    ],
+#    copts = [
+#        "-std=c++17",
+#    ],
+#    linkopts = [
+#        "-std=c++17",
+#    ],
     deps = [
         ":cli_lib",
         "@com_google_googletest//:gtest_main",
