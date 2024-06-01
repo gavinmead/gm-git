@@ -11,12 +11,12 @@ cc_library(
         "command.h",
         "flag.h",
     ],
-    copts = [
-        "-std=c++17",
-    ],
-    linkopts = [
-        "-std=c++17",
-    ],
+#    copts = [
+#        "-std=c++17",
+#    ],
+#    linkopts = [
+#        "-std=c++17",
+#    ],
     visibility = ["//visibility:public"],
 )
 
