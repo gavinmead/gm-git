@@ -43,6 +43,6 @@ jobs:
           bazelrc: |
             common --enable_bzlmod
             build --cxxopt='-std=c++17'
-            test --action_env=BAZEL_CXXOPTS="-std=c++17"
+            test --action_env=BAZEL_CXXOPTS=-std=c++17
       - run:  bazel test --test_output=all //cpp/lib/...:all
 
