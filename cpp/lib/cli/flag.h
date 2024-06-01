@@ -10,26 +10,26 @@
 #include <stdexcept>
 #include <optional>
 
-#define FLAG_TYPE(flag_type)       \
-    std::weak_ptr<flag_type> var;  \
+#define FLAG_TYPE(flag_type)                                                                                \
+    std::weak_ptr<flag_type> var;                                                                           \
     flag_type defaultValue;
 
-#define FLAG_CTOR(flag_type, class_name)                                    \
-    class_name(                                                             \
-         std::weak_ptr<flag_type> var,                                      \
-         flag_type defaultValue,                                            \
-         std::string shortName,                                             \
-         std::string longName = "",                                         \
-         std::string helpText = "") : Flag(std::move(shortName), std::move(longName), std::move(helpText)) { \
-            this->var = var;                                                \
-            this->defaultValue = defaultValue;                              \
-         }                                                                  \
+#define FLAG_CTOR(flag_type, class_name)                                                                    \
+    class_name(                                                                                             \
+         std::weak_ptr<flag_type> var,                                                                      \
+         flag_type defaultValue,                                                                            \
+         std::string shortName,                                                                             \
+         std::string longName = "",                                                                         \
+         std::string helpText = "") : Flag(std::move(shortName), std::move(longName), std::move(helpText)) {\
+            this->var = var;                                                                                \
+            this->defaultValue = defaultValue;                                                              \
+         }                                                                                                  \
 
-#define PROCESS_FLAG(flag_type, statement)      \
-    if (std::shared_ptr<flag_type> tmp = var.lock()) {                \
-        flag_type result = statement;            \
-        *tmp = result;                          \
-    }                                           \
+#define PROCESS_FLAG(flag_type, statement)                                                                  \
+    if (std::shared_ptr<flag_type> tmp = var.lock()) {                                                      \
+        flag_type result = statement;                                                                       \
+        *tmp = result;                                                                                      \
+    }                                                                                                       \
 
 namespace cli {
 
