@@ -35,5 +35,7 @@ jobs:
           # Share repository cache between workflows.
           repository-cache: true
           bazelisk-version: 1.19.0
-      - run:  bazel test --host_cxxopt="-std=c++17" --test_output=all //cpp/lib/...:all
+          bazelrc: |
+            build --cxxopt='-std=c++17'
+      - run:  bazel test --test_output=all //cpp/lib/...:all
 
