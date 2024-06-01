@@ -6,6 +6,7 @@
 #define CLWB_ARG_TYPE_H
 
 #include <list>
+#include <string>
 
 namespace cli {
     enum class ArgType {
