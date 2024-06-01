@@ -39,5 +39,5 @@ jobs:
             common --enable_bzlmod
             build --cxxopt='-std=c++17'
             test --cxxopt='-std=c++17'
-      - run:  bazel test --test_output=all //cpp/lib/...:all
+      - run:  bazel test --test_output=all //cpp/lib/...:all --sandbox_debug
 
