@@ -8,6 +8,7 @@
 #include <vector>
 #include <any>
 #include <iostream>
+#include <stdexcept>
 
 using namespace cli;
 
@@ -31,6 +32,18 @@ TEST(FlagTest, TestIntFlag) {
     ASSERT_EQ(*entry, 0);
     iFlag.processString("100");
     ASSERT_EQ(*entry, 100);
+}
+
+TEST(FlagTest, TestInvalidIntFlag) {
+    auto entry = std::make_shared<int>(0);
+    int defaultValue = 0;
+
+    auto iFlag = IntFlag(std::weak_ptr<int>(entry), defaultValue, "t", "test", "");
+    ASSERT_EQ(*entry, 0);
+    EXPECT_THROW({
+        iFlag.processString("a100");
+    }, std::invalid_argument);
+
 }
 
 TEST(FlagTest, TestOptional) {

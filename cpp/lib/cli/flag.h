@@ -25,6 +25,12 @@
             this->defaultValue = defaultValue;                              \
          }                                                                  \
 
+#define PROCESS_FLAG(flag_type, statement)      \
+    if (std::shared_ptr<flag_type> tmp = var.lock()) {                \
+        flag_type result = statement;            \
+        *tmp = result;                          \
+    }                                           \
+
 namespace cli {
 
     std::optional<int> divide(int num1, int num2) {
@@ -73,13 +79,12 @@ namespace cli {
         FLAG_CTOR(std::string, StringFlag)
 
         void processString(std::string flag) override {
-            if(auto tmp = var.lock()) {
-                *tmp = flag;
-            }
+            PROCESS_FLAG(std::string, flag)
         }
 
     private:
         FLAG_TYPE(std::string)
+
     };
 
     class IntFlag : public Flag {
@@ -87,10 +92,7 @@ namespace cli {
         FLAG_CTOR(int, IntFlag)
 
         void processString(std::string flag) override {
-            if (auto tmp = var.lock()) {
-                auto i = std::stoi(flag);
-                *tmp = i;
-            }
+            PROCESS_FLAG(int, std::stoi(flag))
         }
 
     private:
