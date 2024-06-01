@@ -35,5 +35,6 @@ TEST(FlagTest, TestVectorOfAnyFlags) {
     auto sFlag = StringF();
     auto iFlag = IntF();
 
-
+    auto result = divide(10, 2);
+    ASSERT_TRUE(result.has_value());
 }
