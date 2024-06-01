@@ -9,6 +9,7 @@ cc_library(
     hdrs = [
         "arg_type.h",
         "command.h",
+        "flag.h",
     ],
     visibility = ["//visibility:public"],
 )
@@ -40,6 +41,15 @@ cc_test(
 cc_test(
     name = "arg_type_test",
     srcs = ["arg_type_test.cpp"],
+    deps = [
+        ":cli_lib",
+        "@com_google_googletest//:gtest_main",
+    ],
+)
+
+cc_test(
+    name = "flag_test",
+    srcs = ["flag_test.cpp"],
     deps = [
         ":cli_lib",
         "@com_google_googletest//:gtest_main",
