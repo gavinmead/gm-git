@@ -6,6 +6,8 @@
 #include "flag.h"
 #include <memory>
 #include <vector>
+#include <any>
+#include <iostream>
 
 using namespace cli;
 
@@ -15,26 +17,20 @@ TEST(FlagTest, TestStringFlag) {
 
     auto sf = StringFlag(std::weak_ptr<std::string>(entry), defaultValue, "t", "test", "");
     ASSERT_EQ(sf.ShortName(), "t");
+
+    ASSERT_EQ(*entry, "");
+    sf.processString("test");
+    ASSERT_EQ(*entry, "test");
 }
 
-TEST(FlagTest, TestVectorOfFlags) {
-    auto entry = std::make_shared<std::string>("");
-    auto defaultValue = "default";
-    auto sf = StringFlag(std::weak_ptr<std::string>(entry), defaultValue, "t", "test", "");
+TEST(FlagTest, TestIntFlag) {
+    auto entry = std::make_shared<int>(0);
+    int defaultValue = 0;
 
-    auto iEntry = std::make_shared<int>(0);
-    int defaultIntValue = 0;
-    auto intFlag = IntFlag(iEntry, defaultIntValue, "i", "int-flag", "");
-
-    std::vector<Flag*> v = {&sf, &intFlag};
-    ASSERT_EQ(2, v.size());
-
-}
-
-TEST(FlagTest, TestVectorOfAnyFlags) {
-    auto sFlag = StringF();
-    auto iFlag = IntF();
-
+    auto iFlag = IntFlag(std::weak_ptr<int>(entry), defaultValue, "t", "test", "");
+    ASSERT_EQ(*entry, 0);
+    iFlag.processString("100");
+    ASSERT_EQ(*entry, 100);
 }
 
 TEST(FlagTest, TestOptional) {
