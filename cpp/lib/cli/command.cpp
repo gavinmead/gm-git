@@ -41,6 +41,7 @@ CommandResult Command::Execute(int argc, const char* argv[]) {
                 for (auto& i : currentCommand->subCommands) {
                     if (i->Name() == current_arg) {
                         currentCommand = i.get();
+                        break;
                     }
                 }
 

@@ -5,9 +5,6 @@
 #include "gtest/gtest.h"
 #include "flag.h"
 #include <memory>
-#include <vector>
-#include <any>
-#include <iostream>
 #include <stdexcept>
 
 using namespace cli;
@@ -49,4 +46,16 @@ TEST(FlagTest, TestInvalidIntFlag) {
 TEST(FlagTest, TestOptional) {
     auto result = divide(10, 2);
     ASSERT_TRUE(result.has_value());
+}
+
+TEST(FlagTest, ParseFlagEasy) {
+    const char* args[]={
+            "test","-f", "foo",
+    };
+
+    auto result = parseFlag(1, args);
+    ASSERT_EQ(result.name, "f");
+    ASSERT_EQ(result.argsProcessed, 2);
+    ASSERT_FALSE(result.isLongName);
+    ASSERT_EQ(result.value, "foo");
 }

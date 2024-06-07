@@ -5,6 +5,7 @@ cc_library(
     srcs = [
         "arg_type.cpp",
         "command.cpp",
+        "flag.cpp",
     ],
     hdrs = [
         "arg_type.h",
@@ -74,12 +75,6 @@ cc_test(
 cc_test(
     name = "flag_test",
     srcs = ["flag_test.cpp"],
-    #    copts = [
-    #        "-std=c++17",
-    #    ],
-    #    linkopts = [
-    #        "-std=c++17",
-    #    ],
     deps = [
         ":cli_lib",
         "@com_google_googletest//:gtest_main",

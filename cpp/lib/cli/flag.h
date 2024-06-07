@@ -2,7 +2,8 @@
 // Created by Gavin Mead on 5/29/24.
 //
 
-#pragma once
+#ifndef GM_GIT_FLAG_H
+#define GM_GIT_FLAG_H
 
 #include <string>
 #include <memory>
@@ -33,12 +34,17 @@
 
 namespace cli {
 
-    std::optional<int> divide(int num1, int num2) {
-        if (num2 != 0) {
-            return num1 / num2;
-        }
-        return std::nullopt; // Indicates no type-safe value
-    }
+    struct ParsedFlag {
+        bool isLongName;
+        std::string name;
+        std::string value;
+        int argsProcessed;
+        bool isValid;
+    };
+
+    ParsedFlag parseFlag(int startIdx, const char* argv[]);
+
+    std::optional<int> divide(int num1, int num2);
 
     class Flag {
     public:
@@ -98,4 +104,7 @@ namespace cli {
     private:
         FLAG_TYPE(int)
     };
+
 }
+
+#endif
