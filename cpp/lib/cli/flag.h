@@ -34,15 +34,13 @@
 
 namespace cli {
 
-    struct ParsedFlag {
+    struct FlagName {
         bool isLongName;
         std::string name;
-        std::string value;
-        int argsProcessed;
-        bool isValid;
-    };
+        bool valid;
 
-    ParsedFlag parseFlag(int startIdx, const char* argv[]);
+        void parseFlagName(const char* flagArg);
+    };
 
     std::optional<int> divide(int num1, int num2);
 

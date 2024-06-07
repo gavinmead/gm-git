@@ -48,14 +48,38 @@ TEST(FlagTest, TestOptional) {
     ASSERT_TRUE(result.has_value());
 }
 
-TEST(FlagTest, ParseFlagEasy) {
-    const char* args[]={
-            "test","-f", "foo",
-    };
+TEST(FlagTest, ParseFlagNameShortOk) {
+    const char* arg = "-f";
+    auto f = FlagName{};
+    f.parseFlagName(arg);
+    ASSERT_EQ(f.isLongName, false);
+    ASSERT_EQ(f.name, "f");
+    ASSERT_EQ(f.valid, true);
+}
 
-    auto result = parseFlag(1, args);
-    ASSERT_EQ(result.name, "f");
-    ASSERT_EQ(result.argsProcessed, 2);
-    ASSERT_FALSE(result.isLongName);
-    ASSERT_EQ(result.value, "foo");
+TEST(FlagTest, ParseFlagNameShortNotOk) {
+    const char* arg = "-1";
+    auto f = FlagName{};
+    f.parseFlagName(arg);
+    ASSERT_EQ(f.isLongName, false);
+    ASSERT_EQ(f.name, "1");
+    ASSERT_EQ(f.valid, false);
+}
+
+TEST(FlagTest, ParseFlagNameLongOk) {
+    const char* arg = "--foo";
+    auto f = FlagName{};
+    f.parseFlagName(arg);
+    ASSERT_EQ(f.isLongName, true);
+    ASSERT_EQ(f.name, "foo");
+    ASSERT_EQ(f.valid, true);
+}
+
+TEST(FlagTest, ParseFlagNameLongNotOk) {
+    const char* arg = "--1foo";
+    auto f = FlagName{};
+    f.parseFlagName(arg);
+    ASSERT_EQ(f.isLongName, true);
+    ASSERT_EQ(f.name, "1foo");
+    ASSERT_EQ(f.valid, false);
 }

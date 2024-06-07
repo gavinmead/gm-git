@@ -3,38 +3,31 @@
 //
 
 #include "flag.h"
-#include <cstring>
+#include <cctype>
+#include <string>
+#include <string_view>
 #include <optional>
 
 namespace cli {
-    ParsedFlag parseFlag(int startIdx, const char* argv[]) {
-        //Start reading
-        auto pf = ParsedFlag{};
-        bool hasMore = true;
-        int i = 0;
-        int currentIdx = startIdx;
 
-        while(hasMore) {
-            auto currentArg = argv[currentIdx];
-            size_t len = std::strlen(currentArg);
-
-            char current = argv[currentIdx][i];
-            switch (current) {
-                case '-':
-                    //peek if the next is a -, we know it is a long flag
-                    if (i < len) {
-                        if(argv[currentIdx][i + 1] == '-') {
-                            pf.isLongName = true;
-                            i += 2;
-                        }
-                    }
-                case '=':
-
-            }
-            hasMore = false;
+    void FlagName::parseFlagName(const char *flagArg) {
+        valid = true;
+        auto sv = std::string_view(flagArg);
+        //See if it is a long name
+        auto n = sv.find("--", 0);
+        if (n != std::string::npos) {
+            isLongName = true;
         }
 
-        return ParsedFlag{};
+        if (isLongName) {
+            name = sv.substr(2);
+        } else {
+            name = sv.substr(1);
+        }
+
+        if (std::isdigit(name[0])) {
+            valid = false;
+        }
     }
 
     std::optional<int> divide(int num1, int num2) {
