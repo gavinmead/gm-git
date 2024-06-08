@@ -83,3 +83,12 @@ TEST(FlagTest, ParseFlagNameLongNotOk) {
     ASSERT_EQ(f.name, "1foo");
     ASSERT_EQ(f.valid, false);
 }
+
+TEST(FlagTest, DefaultFlagNameParserOk) {
+    const char* arg = "--foo";
+    auto p = DefaultFlagNameParser();
+    auto f = p.parse(arg);
+    ASSERT_EQ(f.isLongName, true);
+    ASSERT_EQ(f.name, "foo");
+    ASSERT_EQ(f.valid, true);
+}

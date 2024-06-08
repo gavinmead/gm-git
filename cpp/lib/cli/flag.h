@@ -34,6 +34,8 @@
 
 namespace cli {
 
+    std::optional<int> divide(int num1, int num2);
+
     struct FlagName {
         bool isLongName;
         std::string name;
@@ -42,7 +44,19 @@ namespace cli {
         void parseFlagName(const char* flagArg);
     };
 
-    std::optional<int> divide(int num1, int num2);
+    class FlagNameParser {
+    public:
+        virtual ~FlagNameParser() = default;
+        virtual FlagName parse(const char* flagArg) = 0;
+    };
+
+    class DefaultFlagNameParser : public FlagNameParser {
+    public:
+        ~DefaultFlagNameParser() override = default;
+
+        FlagName parse(const char *flagArg) override;
+    };
+
 
     class Flag {
     public:
@@ -88,7 +102,6 @@ namespace cli {
 
     private:
         FLAG_TYPE(std::string)
-
     };
 
     class IntFlag : public Flag {

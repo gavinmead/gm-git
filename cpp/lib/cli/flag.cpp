@@ -36,4 +36,11 @@ namespace cli {
         }
         return std::nullopt; // Indicates no type-safe value
     }
+
+    FlagName DefaultFlagNameParser::parse(const char *flagArg) {
+        auto f = FlagName{};
+        f.parseFlagName(flagArg);
+        return f;
+    }
+
 }
