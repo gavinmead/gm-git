@@ -5,7 +5,7 @@
 #ifndef CLWB_ARG_TYPE_MOCK_H
 #define CLWB_ARG_TYPE_MOCK_H
 
-#include "arg_type.h"
+#include "cpp/lib/cli/args/arg_type.h"
 #include "list"
 #include "string"
 #include "gmock/gmock.h"

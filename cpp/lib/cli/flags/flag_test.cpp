@@ -2,8 +2,8 @@
 // Created by Gavin Mead on 5/31/24.
 //
 
-#include "gtest/gtest.h"
-#include "flag.h"
+#include "include/gtest/gtest.h"
+#include "cpp/lib/cli/flags/flag.h"
 #include <memory>
 #include <stdexcept>
 

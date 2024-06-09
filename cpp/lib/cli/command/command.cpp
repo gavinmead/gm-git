@@ -2,8 +2,8 @@
 // Created by Gavin Mead on 5/19/24.
 //
 
-#include "arg_type.h"
-#include "command.h"
+#include "cpp/lib/cli/args/arg_type.h"
+#include "cpp/lib/cli/command/command.h"
 #include <vector>
 #include <memory>
 #include <iostream>
