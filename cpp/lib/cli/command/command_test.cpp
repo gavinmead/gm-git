@@ -2,10 +2,10 @@
 // Created by Gavin Mead on 5/19/24.
 //
 
-#include "command.h"
-#include "gtest/gtest.h"
-#include "gmock/gmock.h"
-#include "arg_type_mock.h"
+#include "cpp/lib/cli/command/command.h"
+#include "include/gtest/gtest.h"
+#include "include/gmock/gmock.h"
+#include "cpp/lib/cli/mocks/arg_type_mock.h"
 #include <memory>
 
 using namespace cli;

@@ -2,8 +2,8 @@
 // Created by Gavin Mead on 5/19/24.
 //
 
-#include "arg_type.h"
-#include "command.h"
+#include "cpp/lib/cli/args/arg_type.h"
+#include "cpp/lib/cli/command/command.h"
 #include <vector>
 #include <memory>
 #include <iostream>
@@ -41,6 +41,7 @@ CommandResult Command::Execute(int argc, const char* argv[]) {
                 for (auto& i : currentCommand->subCommands) {
                     if (i->Name() == current_arg) {
                         currentCommand = i.get();
+                        break;
                     }
                 }
 

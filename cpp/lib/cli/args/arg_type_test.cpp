@@ -2,8 +2,8 @@
 // Created by Gavin Mead on 5/25/24.
 //
 
-#include "arg_type.h"
-#include "gtest/gtest.h"
+#include "cpp/lib/cli/args/arg_type.h"
+#include "include/gtest/gtest.h"
 #include <memory>
 #include <list>
 
