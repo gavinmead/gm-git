@@ -12,13 +12,22 @@
 
 using namespace cli;
 
+TEST(CommandContextBuilder, TestDefaults) {
+    DefaultCommandContextBuilder builder = DefaultCommandContextBuilder();
+    auto ctx = builder.build();
+    ASSERT_NE(ctx, nullptr);
+    ASSERT_NE(ctx->GetArgTypeResolver(), nullptr);
+    ASSERT_NE(ctx->GetFlagNameParser(), nullptr);
+}
+
 TEST(ContextBuilderTest, TestCustomArgTypeResolver) {
     std::unique_ptr<ArgTypeResolver> mockResolver = std::make_unique<cli::MockArgTypeResolver>();
 
-    auto builder = DefaultCommandContextBuilder().withArgTypeResolver(std::move(mockResolver));
-    ASSERT_NE(builder, nullptr);
+    DefaultCommandContextBuilder builder = DefaultCommandContextBuilder();
 
-    auto ctx = builder->build();
+    builder.withArgTypeResolver(std::move(mockResolver));
+    auto ctx = builder.build();
     ASSERT_NE(ctx, nullptr);
-
+    ASSERT_NE(ctx->GetArgTypeResolver(), nullptr);
+    ASSERT_NE(ctx->GetFlagNameParser(), nullptr);
 }
