@@ -20,12 +20,6 @@ cc_library(
 cc_test(
     name = "context_test",
     srcs = ["context_test.cpp"],
-    copts = [
-        "-std=c++17",
-    ],
-    linkopts = [
-        "-std=c++17",
-    ],
     visibility = ["//visibility:private"],
     deps = [
         ":context_lib",

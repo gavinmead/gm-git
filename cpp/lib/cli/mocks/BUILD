@@ -6,12 +6,6 @@ cc_library(
     hdrs = [
         "arg_type_mock.h",
     ],
-    copts = [
-        "-std=c++17",
-    ],
-    linkopts = [
-        "-std=c++17",
-    ],
     visibility = ["//visibility:public"],
     deps = [
         "//cpp/lib/cli/args:argtype_lib",

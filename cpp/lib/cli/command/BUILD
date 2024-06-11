@@ -18,12 +18,6 @@ cc_library(
 cc_test(
     name = "command_test",
     srcs = ["command_test.cpp"],
-    copts = [
-        "-std=c++17",
-    ],
-    linkopts = [
-        "-std=c++17",
-    ],
     visibility = ["//visibility:private"],
     deps = [
         ":command_lib",
