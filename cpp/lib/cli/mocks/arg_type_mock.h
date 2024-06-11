@@ -10,11 +10,11 @@
 #include "string"
 #include "gmock/gmock.h"
 
-using namespace cli;
-
-namespace {
+namespace cli {
     class MockArgTypeResolver : public ArgTypeResolver {
     public:
+        MockArgTypeResolver() = default;
+        ~MockArgTypeResolver() override = default;
         MOCK_METHOD(ArgType, resolveArgType, (const char* arg, std::list<std::string> commands), (override));
     };
 }
