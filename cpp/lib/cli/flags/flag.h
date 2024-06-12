@@ -46,12 +46,14 @@ namespace cli {
 
     class FlagNameParser {
     public:
+        FlagNameParser() = default;
         virtual ~FlagNameParser() = default;
         virtual FlagName parse(const char* flagArg) = 0;
     };
 
     class DefaultFlagNameParser : public FlagNameParser {
     public:
+        DefaultFlagNameParser() = default;
         ~DefaultFlagNameParser() override = default;
 
         FlagName parse(const char *flagArg) override;

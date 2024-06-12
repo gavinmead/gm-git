@@ -18,7 +18,7 @@ namespace cli {
         return *this;
     }
 
-    CommandContextBuilder& DefaultCommandContextBuilder::withFlagNameResolver(std::unique_ptr<FlagNameParser> parser) {
+    CommandContextBuilder& DefaultCommandContextBuilder::withFlagNameParser(std::unique_ptr<FlagNameParser> parser) {
         this->flagNameParser = std::move(parser);
         return *this;
     }

@@ -7,6 +7,8 @@
 #include "context.h"
 #include "cpp/lib/cli/args/arg_type.h"
 #include "cpp/lib/cli/mocks/arg_type_mock.h"
+#include "cpp/lib/cli/mocks/flag_mock.h"
+#include "cpp/lib/cli/flags/flag.h"
 #include <memory>
 
 
@@ -16,8 +18,8 @@ TEST(CommandContextBuilder, TestDefaults) {
     DefaultCommandContextBuilder builder = DefaultCommandContextBuilder();
     auto ctx = builder.build();
     ASSERT_NE(ctx, nullptr);
-    ASSERT_NE(ctx->GetArgTypeResolver(), nullptr);
-    ASSERT_NE(ctx->GetFlagNameParser(), nullptr);
+    ASSERT_FALSE(ctx->GetArgTypeResolver().expired());
+    ASSERT_FALSE(ctx->GetFlagNameParser().expired());
 }
 
 TEST(ContextBuilderTest, TestCustomArgTypeResolver) {
@@ -28,6 +30,33 @@ TEST(ContextBuilderTest, TestCustomArgTypeResolver) {
     builder.withArgTypeResolver(std::move(mockResolver));
     auto ctx = builder.build();
     ASSERT_NE(ctx, nullptr);
-    ASSERT_NE(ctx->GetArgTypeResolver(), nullptr);
-    ASSERT_NE(ctx->GetFlagNameParser(), nullptr);
+    ASSERT_FALSE(ctx->GetArgTypeResolver().expired());
+    ASSERT_FALSE(ctx->GetFlagNameParser().expired());
+}
+
+TEST(ContextBuilderTest, TestCustomFlagTypeResolver) {
+    std::unique_ptr<FlagNameParser> mockFlagNameParser = std::make_unique<cli::MockFlagNameParser>();
+
+    DefaultCommandContextBuilder builder = DefaultCommandContextBuilder();
+    builder.withFlagNameParser(std::move(mockFlagNameParser));
+
+    auto ctx = builder.build();
+    ASSERT_NE(ctx, nullptr);
+    ASSERT_FALSE(ctx->GetArgTypeResolver().expired());
+    ASSERT_FALSE(ctx->GetFlagNameParser().expired());
+}
+
+TEST(ContextBuilderTest, TestFullCustomization) {
+    std::unique_ptr<ArgTypeResolver> mockResolver = std::make_unique<cli::MockArgTypeResolver>();
+    std::unique_ptr<FlagNameParser> mockFlagNameParser = std::make_unique<cli::MockFlagNameParser>();
+
+    DefaultCommandContextBuilder builder = DefaultCommandContextBuilder();
+    builder
+        .withArgTypeResolver(std::move(mockResolver))
+        .withFlagNameParser(std::move(mockFlagNameParser));
+
+    auto ctx = builder.build();
+    ASSERT_NE(ctx, nullptr);
+    ASSERT_FALSE(ctx->GetArgTypeResolver().expired());
+    ASSERT_FALSE(ctx->GetFlagNameParser().expired());
 }
